@@ -66,8 +66,10 @@
             </div>
         </div>
     </footer>
+    <div class="overlay"></div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+<script src="https://rawgit.com/michaelbromley/angularUtils-pagination/master/dirPagination.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/ajax/ajax-form.js') }}"></script>

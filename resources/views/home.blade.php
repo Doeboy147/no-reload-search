@@ -16,7 +16,7 @@
                 </button>
                 @include('includes.add-listings')
 
-                <span class="float-right">
+                {{--<span class="float-right">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-danger btn-lg shadow">
@@ -24,7 +24,7 @@
                         Logout
                     </button>
                 </form>
-                </span>
+                </span>--}}
 
             </div>
         </div>
@@ -34,46 +34,56 @@
                 <form>
                     <div class="form-group row">
                         <div class="col-md-4 mb-3">
-                            <input type="text" ng-keyUp="search(query)" ng-model="query" placeholder="Search" class="form-control shadow-sm">
+                            <input type="text" ng-model="query" placeholder="Search" class="form-control shadow-sm">
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <button type="submit" class="btn btn-dark shadow"> Filter</button>
+                        <div class="col-md-4 mb-3 mt-1">
+                            <button type="submit" ng-click="getResults(query)" class="btn btn-dark shadow"><i
+                                    class="fa fa-search"></i> Search
+                            </button>
+                            <button type="reset" ng-click="getAll()" class="btn btn-danger shadow"><i
+                                    class="fa fa-recycle"></i> Reset
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
-
         </div>
+        <div class="col-md-12" id="loader">
+            <div class="card bg-light">
+                <div class="loader"></div>
+            </div>
+        </div>
+
         <!--cars listing -->
         <div class="row pl-md-5 p-sm-5 mt-5">
             @if ($listings->count() > 0)
-                    <div ng-repeat="car in cars" class="col-md-3 mb-5">
-                        <div class="card shadow">
-                            <img src="<% car.picture %>" class="img-fluid imageThumb" alt="image">
-                            <div class="card-body">
-                                <div class="mb-4">
-                                    <strong><% car.maker %> <% car.model %> </strong><br>
-                                    <strong> Year :</strong> <% car.year %> <br>
-                                    <strong class="text-muted mb-3"><% car.created_at %> </strong><br>
-                                </div>
+                <div dir-paginate="car in items | itemsPerPage: 4" class="col-md-3 mb-5">
+                    <div class="card shadow">
+                        <img src="<% car.picture %>" class="img-fluid imageThumb" alt="image">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <strong><% car.maker %> <% car.model %> </strong><br>
+                                <strong> Year :</strong> <% car.year %> <br>
+                                <strong class="text-muted mb-3"><% car.created_at %> </strong><br>
+                            </div>
 
-                                <div>
-                                    <strong>Price</strong> <% car.price %> <br>
-                                </div>
+                            <div>
+                                <strong>Price</strong> <% car.price %> <br>
+                            </div>
 
-                                <div class="row mt-4">
-                                    <div class="col-6 col-sm-6">
-                                        <strong> Add By :</strong> <% car.user.name %>
-                                    </div>
-                                    <div class="col-6 col-sm-6">
-                                        <a href="/delete-item/<% car.uuid %>"
-                                           class="btn btn-danger shadow delete btn-block"> Remove</a>
-                                    </div>
+                            <div class="row mt-4">
+                                <div class="col-6 col-sm-6">
+                                    <strong> Add By :</strong> <% car.user.name %>
+                                </div>
+                                <div class="col-6 col-sm-6">
+                                    <a href="/delete-item/<% car.uuid %>"
+                                       class="btn btn-danger shadow delete btn-block"> Remove</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- item end-->
+                </div>
+                <!-- item end-->
             @else
                 <div class="col-md-6 offset-3">
                     <div class="card shadow-sm">
@@ -89,12 +99,12 @@
             @endif
 
             <div class="col-md-12">
-                <div class="text-center mb-5">
-                    {{ $listings->links() }}
-                </div>
+                <dir-pagination-controls
+                    max-size="5"
+                    direction-links="true"
+                    boundary-links="true">
+                </dir-pagination-controls>
             </div>
-
-
         </div>
     </div>
 @endsection
