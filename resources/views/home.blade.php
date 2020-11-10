@@ -57,9 +57,7 @@
         <!--cars listing -->
         <div class="row pl-md-5 p-sm-5 mt-5">
             @if ($listings->count() > 0)
-                <div dir-paginate="car in items | itemsPerPage: itemsPerPage" total-items=totalItems
-                     current-page="currentPage"
-                     pagination-id="pagination" class="col-md-3 mb-5">
+                <div dir-paginate="car in items | itemsPerPage: itemsPerPage" total-items="totalItems" current-page="pagination.current" class="col-md-3 mb-5">
                     <div class="card shadow">
                         <img src="<% car.picture %>" class="img-fluid imageThumb" alt="image">
                         <div class="card-body">
@@ -86,8 +84,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <dir-pagination-controls boundary-links="true"
-                                             pagination-id="pagination"></dir-pagination-controls>
+                    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
                 </div>
                 <!-- item end-->
             @else

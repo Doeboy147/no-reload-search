@@ -30,14 +30,11 @@ class HomeController extends Controller
     public function getCars()
     {
         try {
-            $data = [];
             $cars = $this->getRepository()->setResultOrder('created_at', 'DESC')->getPaginated();
             foreach ($cars as $car) {
                 $car['picture'] = $car->getUrl();
             }
-            $data['user'] = Auth::user();
-            $data['listings'] = $cars;
-            return $data;
+            return $cars;
         } catch (QueryException $exception) {
             return $this->ajaxError($exception->getMessage());
         }
