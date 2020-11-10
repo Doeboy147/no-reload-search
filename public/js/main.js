@@ -7,15 +7,9 @@ angular.module('MainApp', ['angularUtils.directives.dirPagination'], function ($
     $scope.currentPage = 1;
     $scope.itemsPerPage = 0;
 
-    $scope.pagination = {
-        current: 1
-    };
-
-    $scope.pageChanged = function (newPage) {
-        getResultsPage(newPage);
-    };
 
     $('#loader').hide();
+
     $scope.getAll = function () {
         $scope.query = '';
         $http.get('/getCars').then(function (response) {
@@ -42,15 +36,21 @@ angular.module('MainApp', ['angularUtils.directives.dirPagination'], function ($
             data.search = query;
             $http.post('/search', data).then(function (response) {
                 $('#loader').hide();
-                $scope.items = response.data.listings.data;
-                $scope.totalItems = response.data.listings.total;
-                $scope.itemsPerPage = response.data.listings.per_page;
+                $scope.items = response.data.data;
+                $scope.totalItems = response.data.total;
+                $scope.itemsPerPage = response.data.per_page;
             }).catch(function (error) {
                 console.log(error.data)
             })
         } else {
             $('#loader').hide();
             $scope.getAll();
+        }
+    };
+
+    $scope.pageChanged = function (newPage) {
+        if(newPage !== 1) {
+            getResultsPage(newPage);
         }
     };
 

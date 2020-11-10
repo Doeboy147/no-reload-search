@@ -47,9 +47,8 @@ class HomeController extends Controller
             foreach ($cars as $car) {
                 $car['picture'] = $car->getUrl();
             }
-            $data['listings'] = $cars;
-            return $data;
-        }catch (LaravelHelpersExceptions $exception) {
+            return $cars;
+        } catch (LaravelHelpersExceptions $exception) {
             return $exception->getMessage();
         }
     }
