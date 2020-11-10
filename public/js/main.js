@@ -3,7 +3,7 @@ angular.module('MainApp', ['angularUtils.directives.dirPagination'], function ($
     $interpolateProvider.endSymbol('%>');
 }).controller('MainCtrl', function ($scope, $http) {
     $scope.totalItems = 0;
-    $scope.pageSize = 5;
+    $scope.pageSize = 4;
     $scope.currentPage = 1;
 
     $('#loader').hide();
@@ -29,7 +29,7 @@ angular.module('MainApp', ['angularUtils.directives.dirPagination'], function ($
 
     $scope.search = function (query) {
         let data = {};
-        if (query.length > 2) {
+        if (query.length > 1) {
             data.search = query;
             $http.post('/search', data).then(function (response) {
                 $('#loader').hide();

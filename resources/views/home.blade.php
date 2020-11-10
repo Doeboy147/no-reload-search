@@ -57,7 +57,7 @@
         <!--cars listing -->
         <div class="row pl-md-5 p-sm-5 mt-5">
             @if ($listings->count() > 0)
-                <div dir-paginate="car in items | itemsPerPage: 4" class="col-md-3 mb-5">
+                <div dir-paginate="car in items | itemsPerPage: 4" total-items="<% totalItems %>" class="col-md-3 mb-5">
                     <div class="card shadow">
                         <img src="<% car.picture %>" class="img-fluid imageThumb" alt="image">
                         <div class="card-body">
@@ -83,6 +83,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <dir-pagination-controls
+                        boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
                 <!-- item end-->
             @else
                 <div class="col-md-6 offset-3">
@@ -97,14 +102,6 @@
                     </div>
                 </div>
             @endif
-
-            <div class="col-md-12">
-                <dir-pagination-controls
-                    max-size="5"
-                    direction-links="true"
-                    boundary-links="true">
-                </dir-pagination-controls>
-            </div>
         </div>
     </div>
 @endsection
